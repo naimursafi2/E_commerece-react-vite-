@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 import { CiDiscount1 } from "react-icons/ci";
@@ -110,11 +110,13 @@ const Navbar = () => {
       ],
     },
   ];
-  document.addEventListener("mousedown",(e)=>{
-    if(!navRef.current.contains(e.target)){
-      setIsOpen(false)
-    }
-  })
+  useEffect(() => {
+    document.addEventListener("mousedown", (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    });
+  }, [navRef]);
   console.log(openDropDown);
   return (
     <header>
@@ -224,8 +226,8 @@ const Navbar = () => {
         className={`${isOpen ? "opacity-100 visible" : "opacity-0 invisible"} transition md:hidden fixed top-0 left-0 w-full h-screen bg-primary/80`}
       >
         <div
-        ref={navRef}
-          className={`${isOpen ? "translate-x-0" : "-translate-x-100"} transition-all w-4/5 bg-theme/83 h-full `}
+          ref={navRef}
+          className={`${isOpen ? "translate-x-0" : "-translate-x-full"} transition-all w-4/5 bg-theme/83 h-full `}
         >
           <div className="bg-black/90 px-2 flex justify-between items-center py-3 border-b border-primary/70">
             <h5 className="font-bold text-xl text-white">Menu Sidebar</h5>
@@ -245,7 +247,6 @@ const Navbar = () => {
                     <FaChevronRight className="" />
                   </button>
                 </div>
-
                 <ul
                   className={`${openDropDown === item.title ? "block" : "hidden"}  font-semibold text-base pl-3 space-y-2 mt-2`}
                 >

@@ -1,13 +1,35 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
-@utility container {
-  margin: auto;
-  padding: 0px 16px;
-}
 @theme {
   --color-brand: #008ecc;
   --color-primary: #666666;
   --color-secondary: #f5f5f5;
   --color-third: #f3f9fb;
   --color-theme: #fff;
+  --font-primary: "Roboto", sans-serif;
+}
+
+body {
+  @apply font-primary;
+}
+
+@utility container {
+  margin: auto;
+  padding: 0px 16px;
+}
+@utility py-120{
+  padding-top:120px;
+  padding-bottom:120px
+}
+.slick-dots .slick-active {
+  @apply w-10 bg-theme rounded-full;
+}
+@layer components {
+  .heading {
+    @apply font-bold text-lg lg:text-2xl text-primary;
+  }
+  .heading span {
+    @apply text-brand;
+  }
 }

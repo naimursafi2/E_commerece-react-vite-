@@ -205,7 +205,7 @@ const Navbar = () => {
                   <BiChevronDown />
                 </div>
               </Link>
-              <ul className="absolute top-full left-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 bg-theme shadow-2xl w-48 p-3 space-y-2 text-base text-primary text-medium">
+              <ul className="absolute top-full left-0 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 bg-theme shadow-2xl w-48 p-3 space-y-2 text-base text-primary text-medium">
                 {item.children.map((child) => (
                   <li key={child.title}>
                     <Link

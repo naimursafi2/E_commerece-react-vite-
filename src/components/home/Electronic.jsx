@@ -1,28 +1,47 @@
 import React from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router";
-import ElectronicCard from "../ui/ElectronicCard";
-import { NextArrow, PrevArrow } from "../ui/SlideArrows";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Electronic = () => {
+  const marketing = [
+    {
+      image: "/electronic1.png",
+    },
+    {
+      image: "/electronic2.png",
+    },
+    {
+      image: "/electronic3.png",
+    },
+    {
+      image: "/electronic1.png",
+    },
+  ];
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    appendDots: (dots) => (
-      <div>
-        <ul className="flex bottom-3 md:bottom-20  left-10 md:left-24  gap-2 justify-center">
-          {dots}
-        </ul>
-      </div>
-    ),
+    autoplay: false,
+    speed: 1000,
+    autoplaySpeed: 1000,
+    cssEase: "linear",
+   
+   appendDots: (dots) => (
+  <div className="relative">
+    <ul className="flex absolute left-1/2 -translate-x-1/2 bottom-3 md:bottom-20">
+      {dots}
+    </ul>
+  </div>
+),
+
     customPaging: (i) => (
-      <div className="w-2 md:w-4 h-2 md:h-4 bg-red-800  rounded-full flex justify-center items-center">{i + 1}</div>
+      <div className="w-2 md:w-4 h-2 md:h-4 bg-slate-500  rounded-full flex justify-center items-center">
+     
+      </div>
     ),
   };
   return (
@@ -37,12 +56,19 @@ const Electronic = () => {
             <BiChevronRight className="text-2xl text-brand" />
           </Link>
         </div>
-        <div className=" gap-4">
+        <div className=" gap-4 ">
           <Slider {...settings}>
-            <ElectronicCard />
-            <ElectronicCard />
-            <ElectronicCard />
-            <ElectronicCard />
+            {marketing.map((items, index) => (
+              <div key={index}>
+                <Link className="h-32">
+                  <img
+                    src={items.image}
+                    alt="electronic"
+                    className="w-auto max-w-full"
+                  />
+                </Link>
+              </div>
+            ))}
           </Slider>
         </div>
       </div>

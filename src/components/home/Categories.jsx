@@ -1,7 +1,6 @@
 import React from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router";
-import TopCategories from "../ui/TopCategories";
 
 const Categories = () => {
   const categorie = [
@@ -46,13 +45,22 @@ const Categories = () => {
             <BiChevronRight className="text-2xl text-brand" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7  lg:gap-4">
-          {categorie.map((items, index) => (
-            <TopCategories
-              key={index}
-              image={items.image}
-              title={items.title}
-            />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1.5 lg:gap-4">
+          {categorie.map((items) => (
+            <div key={items.title}>
+              <div className="flex justify-center items-center gap-2 border border-transparent hover:shadow-xl transition h-38 hover:border-brand/40 bg-secondary rounded-full w-full">
+                <Link to="/" className="flex justify-center py-3.5 px-10 ">
+                  <img
+                    src={items.image}
+                    alt="mobile"
+                    className="w-auto max-w-4/5 h-auto max-h-4/5"
+                  />
+                </Link>
+              </div>
+              <div className="text-center mt-5 ">
+                <p className="text-base font-medium ">{items.title}</p>
+              </div>
+            </div>
           ))}
         </div>
       </div>

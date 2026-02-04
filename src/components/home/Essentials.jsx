@@ -1,13 +1,11 @@
 import React from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router";
-import EssentialCard from "../ui/EssentialCard";
 
 const Essentials = () => {
   const categorie = [
     {
       image: "fruit4.png",
-
       name: "Daily Essentials",
       title: "UP to 50% OFF",
     },
@@ -49,14 +47,19 @@ const Essentials = () => {
             <BiChevronRight className="text-2xl text-brand" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6  lg:gap-4">
-          {categorie.map((items, index) => (
-            <EssentialCard
-              key={index}
-              image={items.image}
-              name={items.name}
-              title={items.title}
-            />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5 lg:gap-4">
+          {categorie.map((item, index) => (
+            <div key={index}>
+        <div className="border border-transparent hover:shadow-xl transition hover:border-brand/80 bg-secondary rounded-xl w-full">
+      <Link to="/" className="flex justify-center py-3.5 h-36 px-10">
+        <img src={item.image} alt="mobile" className="w-auto max-w-full"/>
+      </Link>
+    </div>
+      <div className="text-center mt-5 ">
+        <p className="text-base font-semibold text-primary ">{item.name}</p>
+        <p className="text-base font-bold">{item.title}</p>
+      </div>
+    </div>
           ))}
         </div>
       </div>

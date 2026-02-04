@@ -13,13 +13,13 @@ const ProductCard = ({ image, title, price, oldprice, save, discount }) => {
           <p className="font-bold text-sm md:text-base">{price}</p>
           <p className="line-through font-normal text-sm md:text-base">
             {oldprice}
-          </p>
+          </p> 
         </div> 
         <p className="text-green-600 font-semibold text-sm md:text-base">
           {save}
         </p>
       </div>
-      <div className="p-2 md:p-2.5 bg-brand rounded-bl-2xl absolute top-0 right-0 max-w-8 md:max-w-12">
+      <div className="p-2 md:p-2.5 bg-brand rounded-bl-2xl absolute top-0 right-0">
         <p className="text-sm font-bold text-theme">{discount}</p>
       </div>
     </div>

@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3">
           <div>
             <Link to="/">
-              <img src="logo-white.png" alt="logo-white" />
+              <img src="/logo-white.png" alt="logo-white" />
             </Link>
             <h4 className="text-white text-xl font-bold mt-8">Contact Us</h4>
             <div className="mt-5 space-y-5">

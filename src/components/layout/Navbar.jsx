@@ -168,14 +168,14 @@ const Navbar = () => {
             </div>
             <div className="flex gap-10">
               <Link
-                to="/signin"
+                to="/login"
                 className="hidden md:flex items-center gap-1.5 font-bold text-base text-primary relative after:absolute after:h-full after:w-0.5 after:bg-primary/40 after:top-0 after:-right-5"
               >
                 <FaRegUser className="text-brand text-xl" />
                 Sign Up/Sign In
               </Link>
               <Link
-                to="/signin"
+                to="/login"
                 className="flex items-center gap-1.5 font-bold text-lg text-primary"
               >
                 <FaCartShopping className="text-brand text-2xl" />
@@ -260,7 +260,7 @@ const Navbar = () => {
             ))}
           </ul>
           <Link
-            to="/signin"
+            to="/login"
             className="flex px-4 items-center gap-1.5 font-bold text-base uppercase relative after:absolute after:h-full after:w-0.5 after:bg-primary/40 after:top-0 after:-right-5"
           >
             Sign Up/Sign In

@@ -7,6 +7,7 @@ import { RiDiscountPercentLine } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
 import { Link } from "react-router";
 import Slider from "react-slick";
+import Button from "../components/ui/Button";
 const ProductDetails = () => {
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
@@ -154,11 +155,11 @@ const ProductDetails = () => {
                   </p>
                 </Link>
                 <Link
-                  to="https://www.facebook.com/naimursafi2"
+                  to="https://wa.me/8801816795593"
                   className="flex mt-7 items-center bg-green-100 p-4 rounded-2xl gap-3"
                 >
-                  <FaFacebook className="text-2xl text-green-900 font-bold" />
-                  <p className="text-xl font-semibold">Facebook</p>
+                  <BsWhatsapp className="text-2xl text-green-900 font-bold" />
+                  <p className="text-xl font-semibold">Whatsapp</p>
                 </Link>
               </div>
             </div>
@@ -168,6 +169,35 @@ const ProductDetails = () => {
               <span className="font-semibold">3-5 Days</span>
             </p>
           </div>
+        </div>
+        <div className="grid grid-cols-3">
+          <div className="col-span-2">
+            <div className=" mt-17  text-white rounded-2xl py-3  flex gap-4">
+              <Button size="md" variant="orange" className="cursor-pointer">
+                Specifition
+              </Button>
+              <Button size="md" variant="orange" className="cursor-pointer">
+                Description
+              </Button>
+              <Button size="md" variant="orange" className="cursor-pointer">
+                Warranty
+              </Button>
+            </div>
+            <p className="text-3xl font-normal mt-3">Specification</p>
+            <table className="w-full">
+              <tbody className="border border-primary/30 rounded-full">
+                <tr className="border-b border-primary/30 ">
+                  <td>Model</td>
+                  <td>Redmi Note 14 4G</td>
+                </tr>
+                <tr >
+                  <td>Model</td>
+                  <td>Redmi Note 14 4G</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div></div>
         </div>
       </div>
     </section>

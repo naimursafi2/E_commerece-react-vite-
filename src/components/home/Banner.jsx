@@ -24,7 +24,7 @@ const Banner = () => {
   };
   return (
     <section>
-      <div className="container">
+      <div className="container ">
         <Slider {...settings}>
           <div>
             <img className="w-full" src="/banner-2.png" alt="banner" />

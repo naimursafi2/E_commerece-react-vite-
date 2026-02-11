@@ -6,9 +6,10 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const Login = () => {
   const [passToggle, setPassToggle] = useState(false);
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+      <div className="w-full max-w-md bg-secondary rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-4 uppercase text-center">
           LogIn Form
         </h2>
@@ -19,7 +20,7 @@ const Login = () => {
             <Input
               label="Password"
               placeholder="Enter your Password"
-              type={passToggle ? "text" :"password"}
+              type={passToggle ? "text" : "password"}
             />
             {passToggle ? (
               <IoEye

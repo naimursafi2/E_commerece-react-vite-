@@ -19,11 +19,12 @@ const Button = ({
     secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
     danger: "bg-red-500 text-white hover:bg-red-600",
     outline: "border border-brand text-brand hover:bg-brand hover:text-white",
+    orange:"bg-amber-500 text-white hover:bg-amber-700",
   };
 
   const sizes = {
     sm: "px-3 py-1.5 text-xs",
-    md: "px-5 py-2 text-sm",
+    md: "px-5 py-2 text-lg",
     lg: "px-7 py-3 text-base",
   };
 

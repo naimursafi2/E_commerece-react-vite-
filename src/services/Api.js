@@ -8,7 +8,11 @@ export const API = createApi({
       query: ({ limit = 20, skip = 0 }) =>
         `/products?limit=${limit}&skip=${skip} `,
     }),
+    getProductDetails:build.query({
+      query: (id) =>
+        `/products/${id}`,
+    }),   
   }),
 });
 
-export const { useGetProductsQuery } = API;
+export const { useGetProductsQuery, useGetProductDetailsQuery } = API;

@@ -8,7 +8,7 @@ import { useGetProductsQuery } from "../../services/Api";
  
 
 const BestDeals = () => {
-    const { data, isSuccess, isError, error, isLoading } = useGetProductsQuery();
+    const { data, isLoading, isError, error } = useGetProductsQuery({ limit: 6, skip: 0 });
   return (
     <section className="py-120">
       <div className="container">
@@ -16,7 +16,7 @@ const BestDeals = () => {
           <h2 className="heading">
             Grab the best deal on <span>Smartphones</span>
           </h2>
-          <Link to="/" className="flex items-center ">
+          <Link to="/shop" className="flex items-center ">
             View all
             <BiChevronRight className="text-2xl text-brand" />
           </Link>

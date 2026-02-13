@@ -17,10 +17,10 @@ const ProductList = () => {
       <div className="container">
         <div className="mb-6 flex justify-between"> 
           <p>
-            Showing: <span className="font-bold">({data?.total} Items)</span>
+            Showing: <span className="font-bold">({limit} Items)</span>
           </p>
           <div className="flex items-center gap-4">
-            <p className="text-lg">Displaying 1-10 of 41 Products</p>
+            <p className="text-lg">Displaying {skip + 1}-{parseInt(limit)} of 41 Products</p>
             <select
               onChange={(e) => setLimit(e.target.value)}
               value={limit}

@@ -6,7 +6,7 @@ const ProductCard = ({ data }) => {
   return (
     <div className="border border-primary/20 hover:shadow-sm transition relative rounded-2xl overflow-hidden w-full">
       <Link
-        to="/shop/productslug"
+        to={`/shop/${data?.id}`}
         className="bg-secondary py-4 flex justify-center h-40"
       >
         <img

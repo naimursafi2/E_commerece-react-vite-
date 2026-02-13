@@ -119,8 +119,8 @@ const Navbar = () => {
   }, [navRef]);
   console.log(openDropDown);
   return (
-    <header>
-      <div className="hidden md:block py-3 bg-secondary">
+    <header >
+      <div className="hidden md:block  py-3 bg-secondary">
         <div className="text-primary text-base container flex justify-between items-center">
           <h3>Welcome to worldwide Megamart!</h3>
           <div className="flex items-center gap-8">
@@ -184,7 +184,7 @@ const Navbar = () => {
             </div>
           </div>
           {/* Mobile Searchbar */}
-          <div className="flex md:hidden gap-2.5 mt-10 items-center p-3 bg-[#F3F9FB] rounded-xl w-full max-w-lg">
+          <div className="flex md:hidden gap-2.5 z-50 mt-10 items-center p-3 bg-[#F3F9FB] rounded-xl w-full max-w-lg">
             <GoSearch className="text-brand text-2xl" />
             <input
               type="text"

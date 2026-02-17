@@ -167,33 +167,25 @@ const ProductDetails = () => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-3">
-          <div className="col-span-2">
-            <div className=" mt-17  text-white rounded-2xl py-3  flex gap-4">
-              <Button size="md" variant="orange" className="cursor-pointer">
-                Specifition
-              </Button>
-              <Button size="md" variant="orange" className="cursor-pointer">
-                Description
-              </Button>
-              <Button size="md" variant="orange" className="cursor-pointer">
-                Warranty
-              </Button>
-            </div>
-            <p className="text-3xl font-normal mt-3">Specification</p>
-            <table className="w-full">
-              <tbody className="border border-primary/30 rounded-full">
-                <tr className="border-b border-primary/30 ">
-                  <td>Model</td>
-                  <td>Redmi Note 14 4G</td>
-                </tr>
-                <tr>
-                  <td>Model</td>
-                  <td>Redmi Note 14 4G</td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="">
+          <div className=" mt-17  text-white rounded-2xl py-3  flex gap-4">
+            <Button size="md" variant="orange" className="cursor-pointer">
+              Specifition
+            </Button>
+            <Button size="md" variant="orange" className="cursor-pointer">
+              Description
+            </Button>
+            <Button size="md" variant="orange" className="cursor-pointer">
+              Warranty
+            </Button>
           </div>
+          <Link to="" className="text-3xl  font-normal ">
+            Description: <br />
+            <span className="text-2xl mt-2 text-primary/80">
+              {data?.description}
+            </span>
+          </Link>
+
           <div></div>
         </div>
       </div>

@@ -47,7 +47,7 @@ const Banner = () => {
               className="w-full"
               src="/banner-barger.png"
               alt="banner-barger"
-            />
+            /> 
           </div>
         </Slider>
       </div>

@@ -13,11 +13,15 @@ import { FaCartShopping, FaLocationDot } from "react-icons/fa6";
 import { GoSearch } from "react-icons/go";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Link } from "react-router";
+import { useGetCategoryListQuery } from "../../services/Api";
 
 const Navbar = () => {
   const [openDropDown, setOpenDropDown] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef(null);
+  const { data } = useGetCategoryListQuery();
+  console.log(data?.slice(0, 10));
+
   const categories = [
     {
       title: "Mobile",
@@ -117,9 +121,9 @@ const Navbar = () => {
       }
     });
   }, [navRef]);
-  console.log(openDropDown);
+  // console.log(openDropDown);
   return (
-    <header >
+    <header>
       <div className="hidden md:block  py-3 bg-secondary">
         <div className="text-primary text-base container flex justify-between items-center">
           <h3>Welcome to worldwide Megamart!</h3>
@@ -175,7 +179,7 @@ const Navbar = () => {
                 Sign Up/Sign In
               </Link>
               <Link
-                to="/login"
+                to=""
                 className="flex items-center gap-1.5 font-bold text-lg text-primary"
               >
                 <FaCartShopping className="text-brand text-2xl" />
@@ -184,7 +188,7 @@ const Navbar = () => {
             </div>
           </div>
           {/* Mobile Searchbar */}
-          <div className="flex md:hidden gap-2.5 z-50 mt-10 items-center p-3 bg-[#F3F9FB] rounded-xl w-full max-w-lg">
+          <div className=" flex md:hidden gap-2.5 z-50 mt-10 items-center p-3 bg-[#F3F9FB] rounded-xl w-full max-w-lg">
             <GoSearch className="text-brand text-2xl" />
             <input
               type="text"
@@ -197,15 +201,15 @@ const Navbar = () => {
       {/*Dekstop product categories */}
       <div className="border-y border-secondary py-3 hidden md:block">
         <div className="flex container gap-5 ">
-          {categories.map((item) => (
-            <div key={item.title} className="relative group">
-              <Link className="bg-third inline-block hover:bg-brand py-2 px-3 text-[#22222] hover:text-theme rounded-2xl text-base font-medium">
-                <div className="flex items-center gap-1">
-                  <p className="text-xl">{item.title}</p>
-                  <BiChevronDown />
+          {data?.slice(0, 10)?.map((item) => (
+            <div key={item} className="relative group">
+              <Link to={`/shop?category=${item}`} className="bg-third inline-block hover:bg-brand py-2 px-3 text-[#22222] hover:text-theme rounded-2xl text-base font-medium">
+                <div className="flex items-center gap-1 text-nowrap text-sm capitalize">
+                  <p className="">{item}</p>
+                  {/* <BiChevronDown /> */}
                 </div>
-              </Link> 
-              <ul className="absolute top-full left-0 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 bg-theme shadow-2xl w-48 p-3 space-y-2 text-base text-primary text-medium">
+              </Link>
+              {/* <ul className="absolute top-full left-0 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 bg-theme shadow-2xl w-48 p-3 space-y-2 text-base text-primary text-medium">
                 {item.children.map((child) => (
                   <li key={child.title}>
                     <Link
@@ -216,14 +220,14 @@ const Navbar = () => {
                     </Link>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           ))}
         </div>
       </div>
       {/* Mobile Sidebar */}
       <div
-        className={`${isOpen ? "opacity-100 visible" : "opacity-0 invisible"} transition md:hidden fixed top-0 left-0 w-full h-screen bg-primary/80`}
+        className={`${isOpen ? "opacity-100 visible" : "opacity-0 invisible"} z-50 transition md:hidden fixed top-0 left-0 w-full h-screen bg-primary/80`}
       >
         <div
           ref={navRef}
@@ -235,19 +239,19 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className="text-3xl font-semibold text-white bg-black rounded-full"
             >
-              <IoMdCloseCircleOutline />
+              {/* <IoMdCloseCircleOutline /> */}
             </button>
           </div>
           <ul className="p-4 space-y-4 text-primary font-bold text-lg mb-5 pb-5 border-b border-theme">
-            {categories.map((item) => (
-              <li key={item.title}>
+            {data?.slice(0, 10).map((item) => (
+              <li key={item}>
                 <div className="flex justify-between items-center">
-                  <Link>{item.title}</Link>
-                  <button onClick={() => setOpenDropDown(item.title)}>
+                  <Link to="">{item}</Link>
+                  {/* <button onClick={() => setOpenDropDown(item.title)}>
                     <FaChevronRight className="" />
-                  </button>
+                  </button> */}
                 </div>
-                <ul
+                {/* <ul
                   className={`${openDropDown === item.title ? "block" : "hidden"}  font-semibold text-base pl-3 space-y-2 mt-2`}
                 >
                   {item.children.map((child) => (
@@ -255,7 +259,7 @@ const Navbar = () => {
                       <Link>{child.title}</Link>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
               </li>
             ))}
           </ul>

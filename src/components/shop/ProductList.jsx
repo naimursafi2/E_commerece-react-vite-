@@ -2,25 +2,31 @@ import React, { useState } from "react";
 import ProductCard from "../ui/ProductCard";
 import { useGetProductsQuery } from "../../services/Api";
 import Loading from "../ui/Loading";
+import { useSearchParams } from "react-router";
 
 const ProductList = () => {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
   const [limit, setLimit] = useState(20);
   const [skip, setSkip] = useState(0);
   const { data, isSuccess, isError, error, isLoading } = useGetProductsQuery({
     limit,
     skip,
+    category
   });
-  console.log(data);
+  console.log();
 
   return (
     <section className="py-120">
       <div className="container">
-        <div className="mb-6 flex justify-between"> 
+        <div className="mb-6 flex justify-between">
           <p>
             Showing: <span className="font-bold">({limit} Items)</span>
           </p>
           <div className="flex items-center gap-4">
-            <p className="text-lg">Displaying {skip + 1}-{parseInt(limit)} of 41 Products</p>
+            <p className="text-lg">
+              Displaying {skip + 1}-{parseInt(limit)} of 41 Products
+            </p>
             <select
               onChange={(e) => setLimit(e.target.value)}
               value={limit}

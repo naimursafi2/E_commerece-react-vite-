@@ -22,12 +22,12 @@ const Electronic = () => {
   ];
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: true, 
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: false,
-    speed: 1000,
-    autoplaySpeed: 1000,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 3000,
     cssEase: "linear",
    
    appendDots: (dots) => (

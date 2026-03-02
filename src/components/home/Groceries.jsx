@@ -3,54 +3,20 @@ import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router";
 import { useGetProductsQuery } from "../../services/Api";
 
-const Essentials = () => {
+const Groceries = () => {
   const { data, isLoading, isError, error } = useGetProductsQuery({
     limit: 7,
-    category: "kitchen-accessories",
+    category: "groceries",
   });
-  const categorie = [
-    {
-      image: "fruit4.png",
-      name: "Daily Essentials",
-      title: "UP to 50% OFF",
-    },
-    {
-      image: "/fruit1.png",
-      name: "Mango",
-      title: "UP to 40% OFF",
-    },
-    {
-      image: "fruit2.png",
-      name: "Cherry",
-      title: "UP to 20% OFF",
-    },
-    {
-      image: "fruit3.png",
-      name: "Strowberry",
-      title: "UP to 70% OFF",
-    },
-    {
-      image: "fruit5.png",
-      name: "Vegitables",
-      title: "UP to 50% OFF",
-    },
-    {
-      image: "fruit6.png",
-      name: "Fruits",
-      title: "UP to 50% OFF",
-    },
-  ];
+
   return (
     <section className="pb-28">
       <div className="container">
         <div className="mb-10 flex justify-between items-center pb-4 border-b border-primary/30 relative after:absolute after:w-full after:max-w-96 after:h-1 after:bg-brand after:left-0 after:bottom-0 after:rounded-full">
           <h2 className="heading">
-            Daily <span>Essentials</span>
+            Daily <span>Groceries</span>
           </h2>
-          <Link
-            to={`/shop?category=kitchen-accessories`}
-            className="flex items-center "
-          >
+          <Link to={`/shop?category=groceries`} className="flex items-center ">
             View all
             <BiChevronRight className="text-2xl text-brand" />
           </Link>
@@ -71,10 +37,10 @@ const Essentials = () => {
                 </Link>
               </div>
               <div className="text-center mt-5 ">
-                <p className="text-base font-bold  text-black ">
+                <p className="text-base font-bold text-black ">
                   {item.title}
                 </p>
-                <p className="text-base text-primary font-semibold">$ {item.price}</p>
+                <p className="text-base font-semibold text-primary">$ {item.price}</p>
               </div>
             </div>
           ))}
@@ -84,4 +50,4 @@ const Essentials = () => {
   );
 };
 
-export default Essentials;
+export default Groceries;

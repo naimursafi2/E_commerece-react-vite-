@@ -4,7 +4,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { CiDiscount1 } from "react-icons/ci";
 import {
   FaBars,
-  FaCarSide,
+  FaCarSide, 
   FaChevronDown,
   FaChevronRight,
   FaRegUser,
@@ -173,7 +173,7 @@ const Navbar = () => {
             <div className="flex gap-10">
               <Link
                 to="/login"
-                className="hidden md:flex items-center gap-1.5 font-bold text-base text-primary relative after:absolute after:h-full after:w-0.5 after:bg-primary/40 after:top-0 after:-right-5"
+                className="hidden md:flex items-center gap-1.5 font-bold text-base text-primary hover:text-black relative after:absolute after:h-full after:w-0.5 after:bg-primary/40 after:top-0 after:-right-5"
               >
                 <FaRegUser className="text-brand text-xl" />
                 Sign Up/Sign In

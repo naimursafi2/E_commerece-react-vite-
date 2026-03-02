@@ -1,8 +1,11 @@
 import React from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router";
+import { useGetCategoryListQuery } from "../../services/Api";
 
 const Categories = () => {
+  const { data } = useGetCategoryListQuery();
+
   const categorie = [
     {
       image: "/mobile1.png",
@@ -40,25 +43,28 @@ const Categories = () => {
           <h2 className="heading">
             Shop From<span>Top Categories</span>
           </h2>
-          <Link to="/" className="flex items-center ">
+          <Link to="/shop" className="flex items-center ">
             View all
             <BiChevronRight className="text-2xl text-brand" />
           </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1.5 lg:gap-4">
-          {categorie.map((items) => (
-            <div key={items.title}>
+          {data?.slice(0, 7).map((item) => (
+            <div key={item}>
               <div className="flex justify-center items-center gap-2 border border-transparent hover:shadow-xl transition h-38 hover:border-brand/40 bg-secondary rounded-full w-full">
-                <Link to="/" className="flex justify-center py-3.5 px-10 ">
+                <Link
+                  to={`/shop?category=${item}`}
+                  className="flex justify-center py-3.5 px-10 "
+                >
                   <img
-                    src={items.image}
+                    src={"/face-wash.png"}
                     alt="mobile"
                     className="w-auto max-w-4/5 h-auto max-h-4/5"
                   />
                 </Link>
               </div>
               <div className="text-center mt-5 ">
-                <p className="text-base font-medium ">{items.title}</p>
+                <p className="text-base font-medium capitalize">{item}</p>
               </div>
             </div>
           ))}

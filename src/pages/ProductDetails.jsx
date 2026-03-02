@@ -11,7 +11,7 @@ import { useGetProductDetailsQuery } from "../services/Api";
 const ProductDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetProductDetailsQuery(id);
-  console.log(data);
+  console.log(useParams());
 
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);

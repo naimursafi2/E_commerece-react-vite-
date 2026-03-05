@@ -20,7 +20,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef(null);
   const { data } = useGetCategoryListQuery();
-  console.log(data?.slice(0, 10));
+  // console.log(data?.slice(0, 10));
 
   const categories = [
     {

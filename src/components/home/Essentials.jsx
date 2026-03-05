@@ -45,7 +45,7 @@ const Essentials = () => {
       <div className="container">
         <div className="mb-10 flex justify-between items-center pb-4 border-b border-primary/30 relative after:absolute after:w-full after:max-w-96 after:h-1 after:bg-brand after:left-0 after:bottom-0 after:rounded-full">
           <h2 className="heading">
-            Daily <span>Essentials</span>
+            Essential<span> kitchen-accessories</span>
           </h2>
           <Link
             to={`/shop?category=kitchen-accessories`}
@@ -71,7 +71,7 @@ const Essentials = () => {
                 </Link>
               </div>
               <div className="text-center mt-5 ">
-                <p className="text-base font-bold  text-black ">
+                <p className="text-base font-bold text-nowrap text-black ">
                   {item.title}
                 </p>
                 <p className="text-base text-primary font-semibold">$ {item.price}</p>

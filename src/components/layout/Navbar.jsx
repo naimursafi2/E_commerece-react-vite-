@@ -179,8 +179,8 @@ const Navbar = () => {
                 Sign Up/Sign In
               </Link>
               <Link
-                to=""
-                className="flex items-center gap-1.5 font-bold text-lg text-primary"
+                to="/cart"
+                className="flex items-center gap-1.5 font-bold text-lg text-primary hover:text-black"
               >
                 <FaCartShopping className="text-brand text-2xl" />
                 <span className="hidden md:block">Cart</span>

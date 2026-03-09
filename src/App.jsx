@@ -7,6 +7,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Cart from "./pages/Cart";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/registration" element={<Registration />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </BrowserRouter>

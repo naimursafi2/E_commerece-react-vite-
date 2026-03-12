@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FiMinus,
   FiPlus,
@@ -8,54 +8,76 @@ import {
   FiTag,
   FiTruck,
   FiShield,
+  FiGift,
+  FiCreditCard,
+  FiCheckCircle,
 } from "react-icons/fi";
 import { Link } from "react-router";
+import { useGetCartQuery } from "../services/Api";
+;
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Premium Cotton T-Shirt",
-      color: "Black",
-      size: "M",
-      price: 850,
-      qty: 1,
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      id: 2,
-      name: "Classic Sneakers",
-      color: "White",
-      size: "42",
-      price: 2450,
-      qty: 2,
-      image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      id: 3,
-      name: "Leather Backpack",
-      color: "Brown",
-      size: "Large",
-      price: 3200,
-      qty: 1,
-      image:
-        "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80",
-    },
-  ]);
+  const { data, isLoading, isError } = useGetCartQuery();
 
+  const [cartItems, setCartItems] = useState([]);
   const [coupon, setCoupon] = useState("");
-  const shippingCost = 80;
-  const discount = coupon.toLowerCase() === "save10" ? 150 : 0;
+
+  useEffect(() => {
+    if (data?.carts?.length > 0) {
+      const firstCart = data.carts[0];
+
+      const formattedProducts = firstCart.products.map((item) => ({
+        id: item.id,
+        name: item.title,
+        price: item.price,
+        qty: item.quantity,
+        image: item.thumbnail,
+        total: item.total,
+        discountPercentage: item.discountPercentage,
+        discountedTotal: item.discountedTotal,
+      }));
+
+      setCartItems(formattedProducts);
+    }
+  }, [data]);
+
+  const shippingCost = cartItems.length > 0 ? 80 : 0;
+  const platformFee = cartItems.length > 0 ? 20 : 0;
+  const couponDiscount = coupon.toLowerCase() === "save10" ? 150 : 0;
 
   const updateQty = (id, type) => {
     setCartItems((prev) =>
       prev.map((item) => {
         if (item.id !== id) return item;
-        if (type === "inc") return { ...item, qty: item.qty + 1 };
-        if (type === "dec")
-          return { ...item, qty: item.qty > 1 ? item.qty - 1 : 1 };
+
+        if (type === "inc") {
+          const newQty = item.qty + 1;
+          const newTotal = item.price * newQty;
+          const newDiscountedTotal =
+            newTotal - (newTotal * item.discountPercentage) / 100;
+
+          return {
+            ...item,
+            qty: newQty,
+            total: newTotal,
+            discountedTotal: newDiscountedTotal,
+          };
+        }
+
+        if (type === "dec") {
+          const newQty = item.qty > 1 ? item.qty - 1 : 1;
+          const newTotal = item.price * newQty;
+          const newDiscountedTotal =
+            newTotal - (newTotal * item.discountPercentage) / 100;
+
+          return {
+            ...item,
+            qty: newQty,
+            total: newTotal,
+            discountedTotal: newDiscountedTotal,
+          };
+        }
+
         return item;
       }),
     );
@@ -66,10 +88,48 @@ const Cart = () => {
   };
 
   const subtotal = useMemo(() => {
-    return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+    return cartItems.reduce((acc, item) => acc + item.total, 0);
   }, [cartItems]);
 
-  const total = subtotal + shippingCost - discount;
+  const productDiscount = useMemo(() => {
+    return cartItems.reduce(
+      (acc, item) => acc + (item.total - item.discountedTotal),
+      0,
+    );
+  }, [cartItems]);
+
+  const totalQuantity = useMemo(() => {
+    return cartItems.reduce((acc, item) => acc + item.qty, 0);
+  }, [cartItems]);
+
+  const total = subtotal + shippingCost + platformFee - productDiscount - couponDiscount;
+  const totalSaved = productDiscount + couponDiscount;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 p-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-3xl bg-white p-10 text-center shadow-sm">
+            <p className="text-xl font-semibold text-slate-700">Loading cart...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-slate-50 p-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-3xl bg-white p-10 text-center shadow-sm">
+            <p className="text-xl font-semibold text-red-500">
+              Failed to load cart data.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8">
@@ -100,7 +160,7 @@ const Cart = () => {
               cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm md:p-5"
+                  className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md md:p-5"
                 >
                   <div className="flex flex-col gap-4 md:flex-row md:items-center">
                     <img
@@ -115,11 +175,21 @@ const Cart = () => {
                           <h2 className="text-lg font-semibold text-slate-900">
                             {item.name}
                           </h2>
-                          <p className="mt-1 text-sm text-slate-500">
-                            Color: {item.color} • Size: {item.size}
-                          </p>
+
+                          <div className="mt-2 flex flex-wrap items-center gap-2">
+                            <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                              Product ID: #{item.id}
+                            </span>
+                            <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-600">
+                              {item.discountPercentage}% OFF
+                            </span>
+                          </div>
+
                           <p className="mt-3 text-xl font-bold text-emerald-600">
-                            ৳{item.price}
+                            ৳{item.price.toFixed(2)}
+                            <span className="ml-2 text-sm font-normal text-slate-400">
+                              / unit
+                            </span>
                           </p>
                         </div>
 
@@ -132,7 +202,7 @@ const Cart = () => {
                         </button>
                       </div>
 
-                      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
                         <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 p-1">
                           <button
                             onClick={() => updateQty(item.id, "dec")}
@@ -140,9 +210,11 @@ const Cart = () => {
                           >
                             <FiMinus />
                           </button>
+
                           <span className="min-w-[44px] text-center text-sm font-semibold text-slate-800">
                             {item.qty}
                           </span>
+
                           <button
                             onClick={() => updateQty(item.id, "inc")}
                             className="rounded-xl p-2 text-slate-700 transition hover:bg-white"
@@ -151,8 +223,33 @@ const Cart = () => {
                           </button>
                         </div>
 
-                        <p className="text-base font-semibold text-slate-800">
-                          Total: ৳{item.price * item.qty}
+                        <div className="rounded-2xl bg-slate-50 px-4 py-3 text-right">
+                          <p className="text-sm text-slate-500">
+                            Total:{" "}
+                            <span className="font-medium text-slate-700">
+                              ৳{item.total.toFixed(2)}
+                            </span>
+                          </p>
+                          <p className="text-sm text-slate-500">
+                            Saved:{" "}
+                            <span className="font-medium text-emerald-600">
+                              ৳{(item.total - item.discountedTotal).toFixed(2)}
+                            </span>
+                          </p>
+                          <p className="mt-1 text-base font-bold text-slate-900">
+                            Final: ৳{item.discountedTotal.toFixed(2)}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-500">
+                        <p className="flex items-center gap-2">
+                          <FiCheckCircle className="text-emerald-600" />
+                          In stock
+                        </p>
+                        <p className="flex items-center gap-2">
+                          <FiTruck className="text-emerald-600" />
+                          Delivery in 2-4 days
                         </p>
                       </div>
                     </div>
@@ -161,15 +258,27 @@ const Cart = () => {
               ))
             ) : (
               <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center shadow-sm">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-2xl text-slate-500">
+                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 text-3xl text-emerald-600">
                   <FiShoppingBag />
                 </div>
+
                 <h2 className="text-2xl font-semibold text-slate-900">
                   Your cart is empty
                 </h2>
+
                 <p className="mt-2 text-slate-500">
-                  Add some products to see them here.
+                  Looks like you haven’t added any products yet.
                 </p>
+
+                <div className="mt-6">
+                  <Link
+                    to="/shop"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 font-medium text-white transition hover:bg-emerald-700"
+                  >
+                    <FiArrowLeft />
+                    Start Shopping
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -177,11 +286,27 @@ const Cart = () => {
           <div className="h-fit rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
             <h3 className="text-2xl font-bold text-slate-900">Order Summary</h3>
 
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="rounded-2xl bg-slate-50 p-4">
+                <p className="text-sm text-slate-500">Total Items</p>
+                <p className="mt-1 text-xl font-bold text-slate-900">
+                  {cartItems.length}
+                </p>
+              </div>
+              <div className="rounded-2xl bg-slate-50 p-4">
+                <p className="text-sm text-slate-500">Total Quantity</p>
+                <p className="mt-1 text-xl font-bold text-slate-900">
+                  {totalQuantity}
+                </p>
+              </div>
+            </div>
+
             <div className="mt-6 rounded-2xl bg-slate-50 p-3">
               <label className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700">
                 <FiTag className="text-emerald-600" />
                 Coupon Code
               </label>
+
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -194,21 +319,34 @@ const Cart = () => {
                   Apply
                 </button>
               </div>
+
               <p className="mt-2 text-xs text-slate-500">Use code: SAVE10</p>
             </div>
 
             <div className="mt-6 space-y-4 border-b border-slate-200 pb-5 text-sm">
               <div className="flex items-center justify-between text-slate-600">
                 <span>Subtotal</span>
-                <span>৳{subtotal}</span>
+                <span>৳{subtotal.toFixed(2)}</span>
               </div>
+
               <div className="flex items-center justify-between text-slate-600">
                 <span>Shipping</span>
-                <span>৳{shippingCost}</span>
+                <span>৳{shippingCost.toFixed(2)}</span>
               </div>
+
               <div className="flex items-center justify-between text-slate-600">
-                <span>Discount</span>
-                <span>- ৳{discount}</span>
+                <span>Platform Fee</span>
+                <span>৳{platformFee.toFixed(2)}</span>
+              </div>
+
+              <div className="flex items-center justify-between text-slate-600">
+                <span>Product Discount</span>
+                <span>- ৳{productDiscount.toFixed(2)}</span>
+              </div>
+
+              <div className="flex items-center justify-between text-slate-600">
+                <span>Coupon Discount</span>
+                <span>- ৳{couponDiscount.toFixed(2)}</span>
               </div>
             </div>
 
@@ -217,8 +355,15 @@ const Cart = () => {
                 Grand Total
               </span>
               <span className="text-2xl font-bold text-emerald-600">
-                ৳{total}
+                ৳{total.toFixed(2)}
               </span>
+            </div>
+
+            <div className="mb-5 rounded-2xl bg-emerald-50 p-4">
+              <p className="flex items-center gap-2 text-sm font-medium text-emerald-700">
+                <FiGift />
+                You saved ৳{totalSaved.toFixed(2)} on this order
+              </p>
             </div>
 
             <button className="w-full rounded-2xl bg-emerald-600 px-5 py-4 text-base font-semibold text-white shadow-lg shadow-emerald-200 transition hover:-translate-y-0.5 hover:shadow-xl">
@@ -233,6 +378,10 @@ const Cart = () => {
               <div className="flex items-center gap-3">
                 <FiShield className="text-emerald-600" />
                 100% secure payment system
+              </div>
+              <div className="flex items-center gap-3">
+                <FiCreditCard className="text-emerald-600" />
+                Cash on delivery & online payment available
               </div>
             </div>
           </div>

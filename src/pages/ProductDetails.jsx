@@ -1,192 +1,360 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 import { MdCompareArrows } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
+import { FiMinus, FiPlus } from "react-icons/fi";
 import { Link, useParams } from "react-router";
 import Slider from "react-slick";
 import Button from "../components/ui/Button";
 import { useGetProductDetailsQuery } from "../services/Api";
+import { toast } from "react-toastify";
+
 const ProductDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetProductDetailsQuery(id);
-  console.log(useParams());
+
+  const sliderRef1 = useRef(null);
+  const sliderRef2 = useRef(null);
 
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
-  let sliderRef1 = useRef(null);
-  let sliderRef2 = useRef(null);
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
-    setNav1(sliderRef1);
-    setNav2(sliderRef2);
-  }, []);
+    setNav1(sliderRef1.current);
+    setNav2(sliderRef2.current);
+  }, [data]);
+
   const settings = {
     dots: false,
+    arrows: false,
+    infinite: true,
+    speed: 500,
   };
-  return (
-    <section className="py-120">
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 ">
-          <div className="col-span-1">
-            {/* Mega Image */}
-            <div className="bg-secondary flex justify-center items-center border border-primary/30 rounded-3xl">
-              <Slider
-                {...settings}
-                asNavFor={nav2}
-                ref={(slider) => (sliderRef1 = slider)}
-                className="w-full h-full max-w-4/5"
-              >
-                {data?.images?.map((img) => (
-                  <div key={img}>
-                    <img src={img} alt="mobile" className="w-full h-full" />
-                  </div>
-                ))}
-              </Slider>
-            </div>
-            {/* Images List */}
-            <Slider
-              {...settings}
-              asNavFor={nav1}
-              ref={(slider) => (sliderRef2 = slider)}
-              slidesToShow={3}
-              swipeToSlide={true}
-              focusOnSelect={true}
-            >
-              {data?.images?.map((img) => (
-                <div key={img}>
-                  <div className="mt-5 border border-primary/30 mx-2 flex  w-fit items-center justify-center rounded-xl">
-                    <img src={img} alt="mobile " className="w-4/5" />
-                  </div>
-                </div>
-              ))}
-            </Slider>
-          </div>
-          <div className="col-span-2 ">
-            <div className="hidden md:flex justify-between items-center w-full ">
-              <Link to="">
-                <img
-                  src="/Xiaomi-logo.png"
-                  alt="Xiaomi"
-                  className="w-2/3 h-1/2"
-                />
-              </Link>
-              <Link
-                to=""
-                className="flex items-center gap-2 text-blue-500 hover:text-blue-700 transition font-bold"
-              >
-                <MdCompareArrows className="text-xl" />
-                <p className="text-xl"> Add to Compare</p>
-              </Link>
-            </div>
-            <h2 className="text-2xl lg:text-4xl font-bold">{data?.title}</h2>
-            <div className="flex gap-12 text-md lg:text-xl mt-4 font-bold ">
-              <p className="relative after:absolute after:w-0.5 after:h-full after:bg-primary/40 after:top-0 after:-right-6">
-                ${data?.price}{" "}
-                <span className="text-primary">(Cash Price)</span>
-              </p>
-              <p className="relative after:absolute after:w-0.5 after:h-full after:bg-primary/40 after:top-0 after:-right-6">
-                Availability:
-                <span className="text-primary">{data?.availabilityStatus}</span>
-              </p>
-              <p>
-                Brand: <span className="text-primary">{data?.brand}</span>
-              </p>
-            </div>
-            <div className=" w-xs md:w-lg lg:w-xl  gap-5">
-              <div className="border bg-secondary/30 shadow-xs border-primary/30 mt-10 p-4  rounded-2xl">
-                <p className="text-2xl font-bold mb-2">Product details of:</p>
-                <div className="flex gap-4 text-xl mb-3 font-normal">
-                  <ul>
-                    <li>
-                      <p>
-                        Category:
-                        <span className="text-primary">{data?.category}</span>
-                      </p>
-                      <p>
-                        Stock:
-                        <span className="text-primary">{data?.stock}</span>
-                      </p>
-                      <p>
-                        Weight:
-                        <span className="text-primary">{data?.weight}</span>
-                      </p>
-                      <p>
-                        Warranty:
-                        <span className="text-primary">
-                          {data?.warrantyInformation}
-                        </span>
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <p className="text-xl font-semibold mt-9 mb-2 corser">
-              Select Quantity:
-            </p>
-            <input
-              type="number"
-              className="bg-secondary outline-0 py-1 px-1 text-primary text-center"
-            />
-            <div className="grid grid-cols-2 gap-4 cursor-pointer mt-17 text-center text-white rounded-2xl py-3">
-              <Button
-                size="md"
-                className="cursor-pointer bg-green-600 hover:bg-green-800 "
-              >
-                Buy Now
-              </Button>
-              <Button size="md" variant="orange" className="cursor-pointer   ">
-                Add to Cart
-              </Button>
-            </div>
-            <div>
-              <div className="grid grid-cols-2 gap-7">
-                <Link
-                  to=""
-                  className="flex mt-7 items-center bg-amber-100 p-4 rounded-2xl gap-3"
-                >
-                  <RiDiscountPercentLine className="text-2xl" />
-                  <p className="text-xl ">
-                    EMI Available <span className="font-bold">View Plans</span>
-                  </p>
-                </Link>
-                <Link
-                  to="https://wa.me/8801816795593"
-                  className="flex mt-7 items-center bg-green-100 p-4 rounded-2xl gap-3"
-                >
-                  <BsWhatsapp className="text-2xl text-green-900 font-bold" />
-                  <p className="text-xl font-semibold">Whatsapp</p>
-                </Link>
-              </div>
-            </div>
-            <p className="flex items-center gap-2 mt-5 bg-secondary/30 p-3 rounded-xl border border-primary/30  text-lg">
-              <TbTruckDelivery className="text-2xl " />
-              Delivery Timescale:
-              <span className="font-semibold">3-5 Days</span>
+
+  const increaseQty = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const decreaseQty = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const handleAddToCart = () => {
+    if (!data) return;
+
+    const existingCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    const foundItem = existingCart.find((item) => item.id === data.id);
+
+    let updatedCart = [];
+
+    if (foundItem) {
+      updatedCart = existingCart.map((item) => {
+        if (item.id === data.id) {
+          const newQty = item.qty + quantity;
+          const newTotal = item.price * newQty;
+          const newDiscountedTotal =
+            newTotal - (newTotal * (item.discountPercentage || 0)) / 100;
+
+          return {
+            ...item,
+            qty: newQty,
+            total: newTotal,
+            discountedTotal: newDiscountedTotal,
+          };
+        }
+        return item;
+      });
+    } else {
+      const price = Number(data.price) || 0;
+      const discountPercentage = Number(data.discountPercentage) || 0;
+      const total = price * quantity;
+      const discountedTotal = total - (total * discountPercentage) / 100;
+
+      updatedCart = [
+        ...existingCart,
+        {
+          id: data.id,
+          name: data.title,
+          price,
+          qty: quantity,
+          image: data.thumbnail || data.images?.[0],
+          total,
+          discountPercentage,
+          discountedTotal,
+          brand: data.brand || "No Brand",
+          stock: data.stock || 0,
+          category: data.category || "General",
+        },
+      ];
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+    toast.success("Product added to cart");
+  };
+
+  if (isLoading) {
+    return (
+      <section className="py-20">
+        <div className="container">
+          <div className="rounded-3xl bg-white p-10 text-center shadow-sm">
+            <p className="text-xl font-semibold text-slate-700">
+              Loading product details...
             </p>
           </div>
         </div>
-        <div className="">
-          <div className=" mt-17  text-white rounded-2xl py-3  flex gap-4">
-            <Button size="md" variant="orange" className="cursor-pointer">
-              Specifition
-            </Button>
-            <Button size="md" variant="orange" className="cursor-pointer">
-              Description
-            </Button>
-            <Button size="md" variant="orange" className="cursor-pointer">
-              Warranty
-            </Button>
-          </div>
-          <Link to="" className="text-3xl  font-normal ">
-            Description: <br />
-            <span className="text-2xl mt-2 text-primary/80">
-              {data?.description}
-            </span>
-          </Link>
+      </section>
+    );
+  }
 
-          <div></div>
+  return (
+    <section className="bg-slate-50 py-16">
+      <div className="container">
+        <div className="rounded-[28px] bg-white p-4 shadow-sm md:p-6 lg:p-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="col-span-1">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                {data?.images?.length > 0 && (
+                  <Slider
+                    {...settings}
+                    asNavFor={nav2}
+                    ref={sliderRef1}
+                    className="w-full"
+                  >
+                    {data.images.map((img) => (
+                      <div key={img}>
+                        <img
+                          src={img}
+                          alt={data.title}
+                          className="mx-auto h-[320px] w-full object-contain"
+                        />
+                      </div>
+                    ))}
+                  </Slider>
+                )}
+              </div>
+
+              <div className="mt-4">
+                {data?.images?.length > 0 && (
+                  <Slider
+                    {...settings}
+                    asNavFor={nav1}
+                    ref={sliderRef2}
+                    slidesToShow={3}
+                    swipeToSlide={true}
+                    focusOnSelect={true}
+                  >
+                    {data.images.map((img) => (
+                      <div key={img}>
+                        <div className="mx-2 flex cursor-pointer items-center justify-center rounded-2xl border border-slate-200 bg-white p-2">
+                          <img
+                            src={img}
+                            alt={data.title}
+                            className="h-20 w-full object-contain"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </Slider>
+                )}
+              </div>
+            </div>
+
+            <div className="col-span-2">
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+                      {data?.availabilityStatus || "Available"}
+                    </span>
+                    <span className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
+                      Brand: {data?.brand}
+                    </span>
+                    <span className="rounded-full bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700">
+                      Category: {data?.category}
+                    </span>
+                  </div>
+
+                  <Link
+                    to=""
+                    className="inline-flex items-center gap-2 font-bold text-blue-500 transition hover:text-blue-700"
+                  >
+                    <MdCompareArrows className="text-xl" />
+                    <p className="text-lg">Add to Compare</p>
+                  </Link>
+                </div>
+
+                <h2 className="text-3xl font-bold text-slate-900 lg:text-4xl">
+                  {data?.title}
+                </h2>
+
+                <p className="text-lg leading-8 text-slate-600">
+                  {data?.description}
+                </p>
+
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-sm text-slate-500">Cash Price</p>
+                    <p className="mt-1 text-2xl font-bold text-emerald-600">
+                      ${data?.price}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-sm text-slate-500">Stock</p>
+                    <p className="mt-1 text-2xl font-bold text-slate-900">
+                      {data?.stock}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-sm text-slate-500">Discount</p>
+                    <p className="mt-1 text-2xl font-bold text-rose-500">
+                      {data?.discountPercentage || 0}%
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="mb-4 text-2xl font-bold text-slate-900">
+                    Product Details
+                  </p>
+
+                  <div className="grid gap-3 text-base text-slate-700 md:grid-cols-2">
+                    <p>
+                      Category:{" "}
+                      <span className="font-semibold text-primary">
+                        {data?.category}
+                      </span>
+                    </p>
+                    <p>
+                      Brand:{" "}
+                      <span className="font-semibold text-primary">
+                        {data?.brand}
+                      </span>
+                    </p>
+                    <p>
+                      Stock:{" "}
+                      <span className="font-semibold text-primary">
+                        {data?.stock}
+                      </span>
+                    </p>
+                    <p>
+                      Weight:{" "}
+                      <span className="font-semibold text-primary">
+                        {data?.weight}
+                      </span>
+                    </p>
+                    <p>
+                      Warranty:{" "}
+                      <span className="font-semibold text-primary">
+                        {data?.warrantyInformation}
+                      </span>
+                    </p>
+                    <p>
+                      Shipping:{" "}
+                      <span className="font-semibold text-primary">
+                        3-5 Days
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="mb-3 text-lg font-semibold text-slate-900">
+                    Select Quantity:
+                  </p>
+
+                  <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 p-1 w-fit">
+                    <button
+                      onClick={decreaseQty}
+                      className="rounded-xl p-3 text-slate-700 transition hover:bg-white"
+                    >
+                      <FiMinus />
+                    </button>
+
+                    <span className="min-w-[60px] text-center text-lg font-semibold text-slate-900">
+                      {quantity}
+                    </span>
+
+                    <button
+                      onClick={increaseQty}
+                      className="rounded-xl p-3 text-slate-700 transition hover:bg-white"
+                    >
+                      <FiPlus />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <Button
+                    size="md"
+                    className="cursor-pointer bg-green-600 hover:bg-green-700"
+                  >
+                    Buy Now
+                  </Button>
+
+                  <Button
+                    size="md"
+                    variant="orange"
+                    className="cursor-pointer"
+                    onClick={handleAddToCart}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2">
+                  <Link
+                    to=""
+                    className="flex items-center gap-3 rounded-2xl bg-amber-100 p-4"
+                  >
+                    <RiDiscountPercentLine className="text-2xl" />
+                    <p className="text-lg">
+                      EMI Available <span className="font-bold">View Plans</span>
+                    </p>
+                  </Link>
+
+                  <Link
+                    to="https://wa.me/8801816795593"
+                    className="flex items-center gap-3 rounded-2xl bg-green-100 p-4"
+                  >
+                    <BsWhatsapp className="text-2xl font-bold text-green-900" />
+                    <p className="text-lg font-semibold">Whatsapp</p>
+                  </Link>
+                </div>
+
+                <p className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 p-4 text-base text-slate-700">
+                  <TbTruckDelivery className="text-2xl" />
+                  Delivery Timescale:
+                  <span className="font-semibold">3-5 Days</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-6">
+            <div className="mb-4 flex flex-wrap gap-4">
+              <Button size="md" variant="orange" className="cursor-pointer">
+                Specification
+              </Button>
+              <Button size="md" variant="orange" className="cursor-pointer">
+                Description
+              </Button>
+              <Button size="md" variant="orange" className="cursor-pointer">
+                Warranty
+              </Button>
+            </div>
+
+            <h3 className="text-2xl font-semibold text-slate-900">
+              Description
+            </h3>
+            <p className="mt-3 text-lg leading-8 text-slate-600">
+              {data?.description}
+            </p>
+          </div>
         </div>
       </div>
     </section>

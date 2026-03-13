@@ -8,7 +8,7 @@ import { Link, useParams } from "react-router";
 import Slider from "react-slick";
 import Button from "../components/ui/Button";
 import { useGetProductDetailsQuery } from "../services/Api";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -42,75 +42,12 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    if (!data) return;
-
-    const existingCart = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-    const foundItem = existingCart.find((item) => item.id === data.id);
-
-    let updatedCart = [];
-
-    if (foundItem) {
-      updatedCart = existingCart.map((item) => {
-        if (item.id === data.id) {
-          const newQty = item.qty + quantity;
-          const newTotal = item.price * newQty;
-          const newDiscountedTotal =
-            newTotal - (newTotal * (item.discountPercentage || 0)) / 100;
-
-          return {
-            ...item,
-            qty: newQty,
-            total: newTotal,
-            discountedTotal: newDiscountedTotal,
-          };
-        }
-        return item;
-      });
-    } else {
-      const price = Number(data.price) || 0;
-      const discountPercentage = Number(data.discountPercentage) || 0;
-      const total = price * quantity;
-      const discountedTotal = total - (total * discountPercentage) / 100;
-
-      updatedCart = [
-        ...existingCart,
-        {
-          id: data.id,
-          name: data.title,
-          price,
-          qty: quantity,
-          image: data.thumbnail || data.images?.[0],
-          total,
-          discountPercentage,
-          discountedTotal,
-          brand: data.brand || "No Brand",
-          stock: data.stock || 0,
-          category: data.category || "General",
-        },
-      ];
-    }
-
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
-    toast.success("Product added to cart");
-  };
-
-  if (isLoading) {
-    return (
-      <section className="py-20">
-        <div className="container">
-          <div className="rounded-3xl bg-white p-10 text-center shadow-sm">
-            <p className="text-xl font-semibold text-slate-700">
-              Loading product details...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
+     toast.success("Product added successfully");
   }
 
   return (
     <section className="bg-slate-50 py-16">
+      <ToastContainer/>
       <div className="container">
         <div className="rounded-[28px] bg-white p-4 shadow-sm md:p-6 lg:p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -296,14 +233,13 @@ const ProductDetails = () => {
                     Buy Now
                   </Button>
 
-                  <Button
-                    size="md"
-                    variant="orange"
-                    className="cursor-pointer"
+                  <Link
+                  className="bg-amber-500 text-white text-center hover:bg-amber-700 cursor-pointer rounded-xl text-xl p-3"
+                   to=""
                     onClick={handleAddToCart}
                   >
                     Add to Cart
-                  </Button>
+                  </Link>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2">

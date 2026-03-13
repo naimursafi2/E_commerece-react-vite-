@@ -9,43 +9,58 @@ import { toast, ToastContainer } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
+
   const [userData, setUserData] = useState({
     username: "",
     password: "",
   });
-  // console.log(userData);
+
+  const [passToggle, setPassToggle] = useState(false);
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await login(userData);
       console.log(res);
+
       if (res.error) {
         return toast.info(res.error.data.message);
       }
-      // console.log(res.data.accessToken);
-      document.cookie=`accessToken=${res.data.accessToken}`
-      navigate("/profile")
+
+      document.cookie = `accessToken=${res.data.accessToken}; path=/`;
+      document.cookie = `user=${encodeURIComponent(
+        JSON.stringify(res.data),
+      )}; path=/`;
+
+      toast.success("Login successful");
+
+      navigate("/profile");
+      window.location.reload();
     } catch (error) {
       console.log(error);
+      toast.error("Login failed");
     }
   };
-  const [passToggle, setPassToggle] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex h-screen flex-col items-center justify-center">
       <ToastContainer />
-      <div className="w-full max-w-md bg-secondary rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4 uppercase text-center">
-          LogIn Form
+      <div className="w-full max-w-md rounded-lg bg-secondary p-6 shadow-md">
+        <h2 className="mb-4 text-center text-2xl font-bold uppercase text-gray-900">
+          Login Form
         </h2>
+
         <form className="flex flex-col gap-3" onSubmit={handelSubmit}>
           <Input
-            label="username"
+            label="Username"
             placeholder="Enter your username"
             type="text"
             onChange={(e) =>
-              setUserData((prev) => ({ ...prev, username: e.target.value }))
+              setUserData((prev) => ({
+                ...prev,
+                username: e.target.value,
+              }))
             }
           />
 
@@ -55,33 +70,39 @@ const Login = () => {
               placeholder="Enter your Password"
               type={passToggle ? "text" : "password"}
               onChange={(e) =>
-                setUserData((prev) => ({ ...prev, password: e.target.value }))
+                setUserData((prev) => ({
+                  ...prev,
+                  password: e.target.value,
+                }))
               }
             />
+
             {passToggle ? (
               <IoEye
-                onClick={() => setPassToggle(!passToggle)}
-                className="absolute right-2 top-8 text-xl cursor-pointer"
+                onClick={() => setPassToggle(false)}
+                className="absolute right-2 top-8 cursor-pointer text-xl"
               />
             ) : (
               <IoEyeOff
-                onClick={() => setPassToggle(!passToggle)}
-                className="absolute right-2 top-8 text-xl cursor-pointer"
+                onClick={() => setPassToggle(true)}
+                className="absolute right-2 top-8 cursor-pointer text-xl"
               />
             )}
           </div>
 
-          <p className="text-gray-900 ">
+          <p className="text-gray-900">
             Don't have an account?
             <Link
-              to="/registration"
-              className="text-sm text-blue-500 -200 hover:underline mt-4"
+              to="/signup"
+              className="mt-4 text-sm text-blue-500 hover:underline"
             >
+              {" "}
               Sign Up
             </Link>
           </p>
-          <Button className="cursor-pointer" type="submit">
-            Sign In
+
+          <Button className="cursor-pointer" type="submit" disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
       </div>

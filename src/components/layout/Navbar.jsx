@@ -6,17 +6,15 @@ import { GoSearch } from "react-icons/go";
 import { Link } from "react-router";
 import { useGetCategoryListQuery } from "../../services/Api";
 
+
 const Navbar = () => {
-  // mobile sidebar open/close state
   const [isOpen, setIsOpen] = useState(false);
 
-  // logged-in user info store করার জন্য
   const [userInfo, setUserInfo] = useState(null);
 
   // sidebar এর বাইরে click detect করার জন্য ref
   const navRef = useRef(null);
 
-  // category API data
   const { data } = useGetCategoryListQuery();
 
   // cookie থেকে value বের করার function
@@ -106,7 +104,7 @@ const Navbar = () => {
             </Link>
 
             {/* desktop search bar */}
-            <div className="hidden w-full max-w-lg items-center gap-2.5 rounded-xl bg-[#F3F9FB] p-4 md:flex">
+            <div className="hidden w-[420px]  max-w-lg items-center gap-2.5 rounded-xl bg-[#F3F9FB] p-4 md:flex">
               <GoSearch className="text-2xl text-brand" />
               <input
                 type="text"
@@ -116,25 +114,25 @@ const Navbar = () => {
             </div>
 
             {/* right side: profile/login + cart */}
-            <div className="flex gap-10">
+            <div className="flex  gap-10">
               {/* desktop profile / login button */}
               <Link
                 to={userInfo ? "/profile" : "/login"}
-                className="relative hidden items-center gap-2 font-bold text-base text-primary hover:text-black after:absolute after:-right-5 after:top-0 after:h-full after:w-0.5 after:bg-primary/40 md:flex"
+                className="relative flex items-center gap-2 font-bold text-base text-primary hover:text-black after:absolute after:-right-5 after:top-0 after:h-full after:w-0.5 after:bg-primary/40"
               >
                 {userInfo ? (
                   <>
                     <img
                       src={userInfo.image}
                       alt="profile"
-                      className="h-9 w-9 rounded-full object-cover"
+                      className="h-9 w-9 rounded-full object-cover "
                     />
-                    <span>Profile</span>
+                    <span className="hidden lg:block">Profile</span>
                   </>
                 ) : (
                   <>
-                    <FaRegUser className="text-brand text-xl" />
-                    <span>Sign Up/Sign In</span>
+                    <FaRegUser className=" text-brand text-xl ml-2" />
+                    <span className="hidden lg:block">Sign Up/Sign In</span>
                   </>
                 )}
               </Link>
@@ -164,7 +162,7 @@ const Navbar = () => {
 
       {/* ================= DESKTOP CATEGORY BAR ================= */}
       <div className="hidden border-y border-secondary py-3 md:block">
-        <div className="container flex gap-5">
+        <div className="container flex gap-3 flex-wrap xl:flex-nowrap lg:text-nowrap">
           {data?.slice(0, 10)?.map((item) => (
             <Link
               key={item}

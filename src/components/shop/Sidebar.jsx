@@ -6,7 +6,7 @@ const Sidebar = () => {
   const { data, isLoading } = useGetCategoryListQuery();
 
   return (
-    <div className="w-64 rounded-3xl bg-white p-5 shadow-md border border-slate-200">
+    <div className="hidden md:block w-64 rounded-3xl bg-white p-5 shadow-md border border-slate-200">
       {/* Sidebar Title */}
       <div className="mb-5 border-b border-slate-200 pb-3">
         <h2 className="text-xl font-bold text-slate-800">Categories</h2>

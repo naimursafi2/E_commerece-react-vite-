@@ -32,14 +32,12 @@ const Electronic = () => {
    
    appendDots: (dots) => (
   <div className="relative">
-    <ul className="flex absolute left-1/2 -translate-x-1/2 bottom-3 md:bottom-20">
-      {dots}
-    </ul>
+    <ul className=" flex items-center bottom-12 md:bottom-10 left-1/2 -translate-x-1/2  gap-2 absolute"> {dots} </ul>
   </div>
 ),
 
     customPaging: (i) => (
-      <div className="w-2 md:w-4 h-2 md:h-4 bg-slate-500  rounded-full flex justify-center items-center">
+      <div className="w-4 md:w-5 h-4 md:h-5 bg-slate-500  rounded-full flex justify-center items-center">
      
       </div>
     ),

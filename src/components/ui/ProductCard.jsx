@@ -32,9 +32,11 @@ const ProductCard = ({ data }) => {
         </p>
       </div>
       {data?.discountPercentage && (
-        <div className="p-2 md:p-2.5 bg-brand rounded-bl-2xl absolute top-0 right-0 max-w-8 md:max-w-14">
-          <p className="text-sm font-bold text-theme">{data?.discountPercentage}%</p>
-        </div>
+        <div className="absolute top-0 right-0 w-15 h-10 md:w-12 bg-brand rounded-bl-2xl p-1 md:p-2">
+    <p className="text-[17px] md:text-sm font-bold text-theme text-center">
+      {data?.discountPercentage}%
+    </p>
+  </div>
       )}
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -26,39 +25,39 @@ const Electronic = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 3000,
+    speed: 2000,
     autoplaySpeed: 3000,
     cssEase: "linear",
    
    appendDots: (dots) => (
   <div className="relative">
-    <ul className=" flex items-center bottom-12 md:bottom-10 left-1/2 -translate-x-1/2  gap-2 absolute"> {dots} </ul>
+    <ul className=" flex items-center bottom-7 md:bottom-10 left-1/2 -translate-x-1/2  gap-2 absolute"> {dots} </ul>
   </div>
 ),
 
     customPaging: (i) => (
-      <div className="w-4 md:w-5 h-4 md:h-5 bg-slate-500  rounded-full flex justify-center items-center">
+      <div className="hidden md:flex w-2 md:w-5 h-2 md:h-5 bg-slate-500  rounded-full  justify-center items-center">
      
       </div>
     ),
   };
   return (
-    <section className="pb-28">
+    <section className="pb-10 md:pb-28">
       <div className="container">
         <div className="mb-10 flex justify-between items-center pb-4 border-b border-primary/30 relative after:absolute after:w-full after:max-w-96 after:h-1 after:bg-brand after:left-0 after:bottom-0 after:rounded-full">
-          <h2 className="heading">
+          <h2 className="heading text-lg md:text-2xl">
             Top <span>Electronics Brands</span>
           </h2>
-          <Link to="/" className="flex items-center ">
+          <Link to="/" className="flex items-center text-nowrap text-md md:text-xl">
             View all
-            <BiChevronRight className="text-2xl text-brand" />
+            
           </Link>
         </div>
         <div className=" gap-4 ">
           <Slider {...settings}>
             {marketing.map((items, index) => (
-              <div key={index}>
-                <Link className="h-32">
+              <div key={index} className="px-0.5 md:px-2">
+                <Link to="/" className="h-32">
                   <img
                     src={items.image}
                     alt="electronic"

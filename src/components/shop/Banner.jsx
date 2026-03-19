@@ -19,7 +19,7 @@ const Banner = () => {
       </div>
     ),
     customPaging: (i) => (
-      <div className="w-3 md:w-4 h-3 md:h-4 bg-theme rounded-full"></div>
+      <div className="hidden md:flex w-3 md:w-4 h-3 md:h-4 bg-theme rounded-full"></div>
     ),
   };
   return (

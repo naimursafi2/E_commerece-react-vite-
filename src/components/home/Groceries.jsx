@@ -16,7 +16,7 @@ const Groceries = () => {
           <h2 className="heading">
             Daily <span>Groceries</span>
           </h2>
-          <Link to={`/shop?category=groceries`} className="flex items-center ">
+          <Link to={`/shop?category=groceries`} className="flex items-center text-nowrap text-md md:text-xl">
             View all
             <BiChevronRight className="text-2xl text-brand" />
           </Link>

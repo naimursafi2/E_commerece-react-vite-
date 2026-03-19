@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { CiDiscount1 } from "react-icons/ci";
-import { FaBars, FaCarSide, FaRegUser } from "react-icons/fa";
+import { FaBars, FaCarSide, FaMoon, FaRegUser } from "react-icons/fa";
 import { FaCartShopping, FaLocationDot } from "react-icons/fa6";
 import { GoSearch } from "react-icons/go";
 import { Link } from "react-router";
 import { useGetCategoryListQuery } from "../../services/Api";
-
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,7 +92,7 @@ const Navbar = () => {
             {/* mobile menu button */}
             <button
               onClick={() => setIsOpen(true)}
-              className="text-2xl text-primary md:hidden"
+              className="text-2xl text-primary md:hidden cursor-pointer"
             >
               <FaBars />
             </button>
@@ -136,6 +135,10 @@ const Navbar = () => {
                   </>
                 )}
               </Link>
+
+              <button className="flex items-center cursor-pointer">
+                <FaMoon className="text-black text-xl" />
+              </button>
 
               {/* cart button */}
               <Link

@@ -11,14 +11,14 @@ const Banner = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 1000,
-    autoplaySpeed: 3000,
+    speed: 500,
+
     cssEase: "linear",
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     appendDots: (dots) => (
       <div>
-        <ul className=" flex items-center bottom-10 md:bottom-10  left-10 md:left-24  gap-2 absolute">
+        <ul className=" flex items-center  md:bottom-15  left-10 md:left-24  gap-2 absolute">
           {" "}
           {dots}{" "}
         </ul>
@@ -34,7 +34,7 @@ const Banner = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           dots: true,
-          autoplay: true,
+          autoplay: false,
         },
       },
       {
@@ -46,7 +46,8 @@ const Banner = () => {
           arrows: false,
           autoplay: true, // auto slide cholbe
           speed: 1000,
-    autoplaySpeed: 2000,
+          autoplaySpeed: 2000,
+          infinite: true,
         },
       },
     ],
@@ -56,26 +57,19 @@ const Banner = () => {
       <div className="container ">
         <Slider {...settings}>
           <div>
-            <img className="w-full" src="/banner-2.png" alt="banner" />
+            <img className="w-full" src="/protinshek-banner.png" alt="banner" />
+          </div>
+          <div>
+            <img className="w-full" src="/bed-banner.png" alt="banner-barger" />
+          </div>
+          <div>
+            <img className="w-full" src="/egg-banner.png" alt="banner" />
           </div>
           <div>
             <img
               className="w-full"
-              src="/banner-barger.png"
-              alt="banner-barger"
-            />
-          </div>
-          <div>
-            <img className="w-full" src="/banner.png" alt="banner" />
-          </div>
-          <div>
-            <img className="w-full" src="/banner-2.png" alt="banner" />
-          </div>
-          <div>
-            <img
-              className="w-full"
-              src="/banner-barger.png"
-              alt="banner-barger"
+              src="/lipstik-sent-banner.png"
+              alt="banner"
             />
           </div>
         </Slider>

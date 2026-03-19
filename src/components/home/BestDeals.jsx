@@ -12,7 +12,7 @@ const BestDeals = () => {
  
   
   return (
-    <section className="py-120">
+    <section className="py-15 md:py-120">
       <div className="container">
         <div className="mb-10 flex justify-between items-center pb-4 border-b border-primary/30 relative after:absolute after:w-full after:max-w-96 after:h-1 after:bg-brand after:left-0 after:bottom-0 after:rounded-full">
           <h2 className="heading text-lg md:text-2xl">

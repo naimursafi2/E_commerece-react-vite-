@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Electronic = () => {
@@ -20,27 +20,44 @@ const Electronic = () => {
     },
   ];
   const settings = {
-    dots: true,
-    infinite: true, 
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 3000,
-    cssEase: "linear",
-   
-   appendDots: (dots) => (
-  <div className="relative">
-    <ul className=" flex items-center bottom-7 md:bottom-10 left-1/2 -translate-x-1/2  gap-2 absolute"> {dots} </ul>
-  </div>
-),
+  dots: true,
+  infinite: true,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  speed: 2000,
+  autoplaySpeed: 3000,
+  cssEase: "linear",
 
-    customPaging: (i) => (
-      <div className="hidden md:flex w-2 md:w-5 h-2 md:h-5 bg-slate-500  rounded-full  justify-center items-center">
-     
-      </div>
-    ),
-  };
+  appendDots: (dots) => (
+    <div className="relative">
+      <ul className="flex items-center bottom-7 md:bottom-10 left-1/2 -translate-x-1/2 gap-0.5 md:gap-2 absolute">
+        {dots}
+      </ul>
+    </div>
+  ),
+
+  customPaging: () => (
+    <div className="w-2 md:w-4 h-2 md:h-4 bg-slate-500 rounded-full"></div>
+  ),
+
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 640,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
   return (
     <section className="pb-10 md:pb-28">
       <div className="container">
@@ -61,7 +78,7 @@ const Electronic = () => {
                   <img
                     src={items.image}
                     alt="electronic"
-                    className="w-auto max-w-full"
+                    className="block w-full h-auto rounded-lg"
                   />
                 </Link>
               </div>

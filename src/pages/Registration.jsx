@@ -14,7 +14,7 @@ const Registration = () => {
           <img
             src="/login.jpg"
             alt="login"
-            className="rounded-2xl h-full w-full object-cover"
+            className="hidden md:block rounded-2xl h-full w-full object-cover"
           />
         </div>
         <div className=" w-full bg-theme rounded-lg p-6">

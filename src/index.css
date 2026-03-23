@@ -18,7 +18,7 @@ body {
   padding: 0px 16px;
 }
 .slick-dots .slick-active {
-  @apply flex w-5 h-2 md:w-7 bg-slate-400 rounded-full items-center;
+  @apply flex w-5 h-2 md:h-2 md:w-6 bg-slate-400 rounded-full items-center;
 }
 
 @utility py-120{

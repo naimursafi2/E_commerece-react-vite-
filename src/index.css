@@ -1,24 +1,56 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
-@theme {
+
+
+body {
+  @apply font-primary bg-theme text-primary;
+}
+
+:root {
   --color-brand: #008ecc;
   --color-primary: #666666;
   --color-secondary: #f5f5f5;
   --color-third: #f3f9fb;
-  --color-theme: #fff;
+  --color-theme: #ffffff;
+}
+@theme {
+  --color-brand: var(--color-brand);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-third: var(--color-third);
+  --color-theme: var(--color-theme);
   --font-primary: "Roboto", sans-serif;
 }
 
-body {
-  @apply font-primary;
+.dark {
+  --color-brand: #38bdf8;
+  --color-primary: #e5e7eb;
+  --color-secondary: #1f2937;
+  --color-third: #111827;
+  --color-theme: #0f172a;
 }
+
 @utility container {
   margin: auto;
   padding: 0px 16px;
 }
-.slick-dots .slick-active {
-  @apply flex w-5 h-2 md:h-2 md:w-6 bg-slate-400 rounded-full items-center;
+.slick-dots li {
+  width: 16px;
+  height: 16px;
+}
+
+.slick-dots li div {
+  width: 22px;
+  height: 8px;
+  margin: auto;
+  border-radius: 9999px;
+  background: #cbd5e1;
+  transition: all 0.3s ease;
+}
+
+.slick-dots li.slick-active div {
+  background: #008ecc;
 }
 
 @utility py-120{
@@ -34,6 +66,6 @@ body {
   }
 }
 
-.banner-slider .slick-dots li.slick-active div {
+/* .banner-slider .slick-dots li.slick-active div {
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
-}
+} */

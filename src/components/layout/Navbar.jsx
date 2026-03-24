@@ -5,17 +5,16 @@ import { FaCartShopping, FaLocationDot } from "react-icons/fa6";
 import { GoSearch } from "react-icons/go";
 import { Link } from "react-router";
 import { useGetCategoryListQuery } from "../../services/Api";
+import { FiMoon, FiSun } from "react-icons/fi";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false)
   const [userInfo, setUserInfo] = useState(null);
 
   // sidebar এর বাইরে click detect করার জন্য ref
   const navRef = useRef(null);
-
   const { data } = useGetCategoryListQuery();
-
+  
   // cookie থেকে value বের করার function
   const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
@@ -49,7 +48,28 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+//dark and light mode
+useEffect(() => {
+  const theme = localStorage.getItem("theme");
 
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+    setDarkMode(true);
+  }
+}, []);
+const [darkMode, setDarkMode] = useState(false);
+
+const toggleTheme = () => {
+  if (darkMode) {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  } else {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  }
+
+  setDarkMode(!darkMode);
+}
   return (
     <header>
       {/* ================= TOP HEADER (Desktop only) ================= */}
@@ -58,7 +78,6 @@ const Navbar = () => {
           <h3>Welcome to worldwide Megamart!</h3>
 
           <div className="flex items-center gap-8">
-            {/* delivery location */}
             <Link
               to="/"
               className="relative flex items-center gap-2 after:absolute after:-right-4 after:top-0 after:h-full after:w-0.5 after:bg-primary/40"
@@ -67,7 +86,6 @@ const Navbar = () => {
               Deliver to 423651
             </Link>
 
-            {/* track order */}
             <Link
               to="/"
               className="relative flex items-center gap-2 after:absolute after:-right-4 after:top-0 after:h-full after:w-0.5 after:bg-primary/40"
@@ -76,7 +94,6 @@ const Navbar = () => {
               Track your order
             </Link>
 
-            {/* offers */}
             <Link to="/" className="flex items-center gap-2">
               <CiDiscount1 className="text-brand text-xl" />
               All Offers
@@ -89,7 +106,6 @@ const Navbar = () => {
       <nav className="py-5">
         <div className="container">
           <div className="flex items-center justify-between">
-            {/* mobile menu button */}
             <button
               onClick={() => setIsOpen(true)}
               className="text-2xl text-primary md:hidden cursor-pointer"
@@ -112,12 +128,10 @@ const Navbar = () => {
               />
             </div>
 
-            {/* right side: profile/login + cart */}
             <div className="flex  gap-10">
-              {/* desktop profile / login button */}
               <Link
                 to={userInfo ? "/profile" : "/login"}
-                className="relative flex items-center gap-2 font-bold text-base text-primary hover:text-black after:absolute after:-right-5 after:top-0 after:h-full after:w-0.5 after:bg-primary/40"
+                className="relative flex items-center gap-2 font-bold text-base text-primary hover:text-brand dark:hover:text-slate-400 after:absolute after:-right-5 after:top-0 after:h-full after:w-0.5 after:bg-primary/40"
               >
                 {userInfo ? (
                   <>
@@ -136,11 +150,14 @@ const Navbar = () => {
                 )}
               </Link>
 
-              <button className="flex items-center cursor-pointer">
-                <FaMoon className="text-black text-xl" />
-              </button>
+              <button onClick={toggleTheme} className="flex items-center cursor-pointer">
+  {darkMode ? (
+    <FiSun className="text-yellow-400 text-xl" />
+  ) : (
+    <FiMoon className="text-black text-xl" />
+  )}
+</button>
 
-              {/* cart button */}
               <Link
                 to="/cart"
                 className="flex items-center gap-1.5 text-lg font-bold text-primary hover:text-black"
@@ -191,7 +208,6 @@ const Navbar = () => {
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          {/* sidebar close button */}
           <button
             onClick={() => setIsOpen(false)}
             className="mb-6 text-xl font-bold"
@@ -199,7 +215,6 @@ const Navbar = () => {
             Close
           </button>
 
-          {/* mobile category list */}
           <ul className="space-y-4">
             {data?.slice(0, 10)?.map((item) => (
               <li key={item}>

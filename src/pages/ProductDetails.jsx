@@ -42,17 +42,29 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-     toast.success("Product added successfully");
+    toast.success("Product added successfully");
+  };
+
+  if (isLoading) {
+    return (
+      <section className="bg-theme py-16">
+        <div className="container">
+          <div className="rounded-[28px] bg-theme p-6 shadow-sm">
+            <p className="text-primary text-lg font-medium">Loading...</p>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
-    <section className="bg-slate-50 py-16">
-      <ToastContainer/>
+    <section className="bg-theme py-16">
+      <ToastContainer />
       <div className="container">
-        <div className="rounded-[28px] bg-white p-4 shadow-sm md:p-6 lg:p-8">
+        <div className="rounded-[28px] bg-theme p-4 shadow-sm md:p-6 lg:p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="col-span-1">
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <div className="rounded-3xl border border-primary/20 bg-secondary p-4">
                 {data?.images?.length > 0 && (
                   <Slider
                     {...settings}
@@ -85,7 +97,7 @@ const ProductDetails = () => {
                   >
                     {data.images.map((img) => (
                       <div key={img}>
-                        <div className="mx-2 flex cursor-pointer items-center justify-center rounded-2xl border border-slate-200 bg-white p-2">
+                        <div className="mx-2 flex cursor-pointer items-center justify-center rounded-2xl border border-primary/20 bg-theme p-2">
                           <img
                             src={img}
                             alt={data.title}
@@ -106,9 +118,11 @@ const ProductDetails = () => {
                     <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
                       {data?.availabilityStatus || "Available"}
                     </span>
+
                     <span className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
                       Brand: {data?.brand}
                     </span>
+
                     <span className="rounded-full bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700">
                       Category: {data?.category}
                     </span>
@@ -123,73 +137,78 @@ const ProductDetails = () => {
                   </Link>
                 </div>
 
-                <h2 className="text-3xl font-bold text-slate-900 lg:text-4xl">
+                <h2 className="text-3xl font-bold text-primary lg:text-4xl">
                   {data?.title}
                 </h2>
 
-                <p className="text-lg leading-8 text-slate-600">
+                <p className="text-lg leading-8 text-primary">
                   {data?.description}
                 </p>
 
                 <div className="grid gap-4 md:grid-cols-3">
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-sm text-slate-500">Cash Price</p>
+                  <div className="rounded-2xl bg-secondary p-4">
+                    <p className="text-sm text-primary">Cash Price</p>
                     <p className="mt-1 text-2xl font-bold text-emerald-600">
                       ${data?.price}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-sm text-slate-500">Stock</p>
-                    <p className="mt-1 text-2xl font-bold text-slate-900">
+                  <div className="rounded-2xl bg-secondary p-4">
+                    <p className="text-sm text-primary">Stock</p>
+                    <p className="mt-1 text-2xl font-bold text-primary">
                       {data?.stock}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-sm text-slate-500">Discount</p>
+                  <div className="rounded-2xl bg-secondary p-4">
+                    <p className="text-sm text-primary">Discount</p>
                     <p className="mt-1 text-2xl font-bold text-rose-500">
                       {data?.discountPercentage || 0}%
                     </p>
                   </div>
                 </div>
 
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="mb-4 text-2xl font-bold text-slate-900">
+                <div className="rounded-3xl border border-primary/20 bg-secondary p-5">
+                  <p className="mb-4 text-2xl font-bold text-primary">
                     Product Details
                   </p>
 
-                  <div className="grid gap-3 text-base text-slate-700 md:grid-cols-2">
+                  <div className="grid gap-3 text-base text-primary md:grid-cols-2">
                     <p>
                       Category:{" "}
                       <span className="font-semibold text-primary">
                         {data?.category}
                       </span>
                     </p>
+
                     <p>
                       Brand:{" "}
                       <span className="font-semibold text-primary">
                         {data?.brand}
                       </span>
                     </p>
+
                     <p>
                       Stock:{" "}
                       <span className="font-semibold text-primary">
                         {data?.stock}
                       </span>
                     </p>
+
                     <p>
                       Weight:{" "}
                       <span className="font-semibold text-primary">
                         {data?.weight}
                       </span>
                     </p>
+
                     <p>
                       Warranty:{" "}
                       <span className="font-semibold text-primary">
                         {data?.warrantyInformation}
                       </span>
                     </p>
+
                     <p>
                       Shipping:{" "}
                       <span className="font-semibold text-primary">
@@ -200,25 +219,25 @@ const ProductDetails = () => {
                 </div>
 
                 <div>
-                  <p className="mb-3 text-lg font-semibold text-slate-900">
+                  <p className="mb-3 text-lg font-semibold text-primary">
                     Select Quantity:
                   </p>
 
-                  <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 p-1 w-fit">
+                  <div className="flex w-fit items-center rounded-2xl border border-primary/20 bg-secondary p-1">
                     <button
                       onClick={decreaseQty}
-                      className="rounded-xl p-3 text-slate-700 transition hover:bg-white"
+                      className="rounded-xl p-3 text-primary transition hover:bg-theme"
                     >
                       <FiMinus />
                     </button>
 
-                    <span className="min-w-[60px] text-center text-lg font-semibold text-slate-900">
+                    <span className="min-w-[60px] text-center text-lg font-semibold text-primary">
                       {quantity}
                     </span>
 
                     <button
                       onClick={increaseQty}
-                      className="rounded-xl p-3 text-slate-700 transition hover:bg-white"
+                      className="rounded-xl p-3 text-primary transition hover:bg-theme"
                     >
                       <FiPlus />
                     </button>
@@ -234,8 +253,8 @@ const ProductDetails = () => {
                   </Button>
 
                   <Link
-                  className="bg-amber-500 text-white text-center hover:bg-amber-700 cursor-pointer rounded-xl text-xl p-3"
-                   to=""
+                    className="rounded-xl bg-amber-500 p-3 text-center text-xl text-theme hover:bg-amber-700 cursor-pointer"
+                    to=""
                     onClick={handleAddToCart}
                   >
                     Add to Cart
@@ -248,7 +267,7 @@ const ProductDetails = () => {
                     className="flex items-center gap-3 rounded-2xl bg-amber-100 p-4"
                   >
                     <RiDiscountPercentLine className="text-2xl" />
-                    <p className="text-lg">
+                    <p className="text-lg text-black">
                       EMI Available <span className="font-bold">View Plans</span>
                     </p>
                   </Link>
@@ -258,11 +277,13 @@ const ProductDetails = () => {
                     className="flex items-center gap-3 rounded-2xl bg-green-100 p-4"
                   >
                     <BsWhatsapp className="text-2xl font-bold text-green-900" />
-                    <p className="text-lg font-semibold">Whatsapp</p>
+                    <p className="text-lg font-semibold text-black">
+                      Whatsapp
+                    </p>
                   </Link>
                 </div>
 
-                <p className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 p-4 text-base text-slate-700">
+                <p className="flex items-center gap-2 rounded-xl border border-primary/20 bg-secondary p-4 text-base text-primary">
                   <TbTruckDelivery className="text-2xl" />
                   Delivery Timescale:
                   <span className="font-semibold">3-5 Days</span>
@@ -271,7 +292,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-6">
+          <div className="mt-10 rounded-3xl border border-primary/20 bg-secondary p-6">
             <div className="mb-4 flex flex-wrap gap-4">
               <Button size="md" variant="orange" className="cursor-pointer">
                 Specification
@@ -284,10 +305,11 @@ const ProductDetails = () => {
               </Button>
             </div>
 
-            <h3 className="text-2xl font-semibold text-slate-900">
+            <h3 className="text-2xl font-semibold text-primary">
               Description
             </h3>
-            <p className="mt-3 text-lg leading-8 text-slate-600">
+
+            <p className="mt-3 text-lg leading-8 text-primary">
               {data?.description}
             </p>
           </div>

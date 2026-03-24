@@ -47,12 +47,13 @@ const Login = () => {
     <div className="flex h-screen flex-col items-center justify-center">
       <ToastContainer />
       <div className="w-full max-w-md rounded-lg bg-secondary p-6 shadow-md">
-        <h2 className="mb-4 text-center text-2xl font-bold uppercase text-gray-900">
+        <h2 className="mb-4 text-center text-2xl font-bold uppercase dark:text-primary">
           Login Form
         </h2>
 
         <form className="flex flex-col gap-3" onSubmit={handelSubmit}>
           <Input
+          
             label="Username"
             placeholder="Enter your username"
             type="text"
@@ -64,7 +65,7 @@ const Login = () => {
             }
           />
 
-          <div className="relative">
+          <div className="relative ">
             <Input
               label="Password"
               placeholder="Enter your Password"
@@ -90,7 +91,7 @@ const Login = () => {
             )}
           </div>
 
-          <p className="text-gray-900">
+          <p className="text-dark:text-primary">
             Don't have an account?
             <Link
               to="/registration"

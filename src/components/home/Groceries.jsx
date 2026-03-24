@@ -37,7 +37,7 @@ const Groceries = () => {
                 </Link>
               </div>
               <div className="text-center mt-5 ">
-                <p className="text-base font-bold text-black ">
+                <p className="text-base font-bold text-nowrap text-primary ">
                   {item.title}
                 </p>
                 <p className="text-base font-semibold text-primary">$ {item.price}</p>

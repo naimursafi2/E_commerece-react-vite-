@@ -71,7 +71,7 @@ const Essentials = () => {
                 </Link>
               </div>
               <div className="text-center mt-5 ">
-                <p className="text-base font-bold text-nowrap text-black ">
+                <p className="text-base font-bold text-nowrap text-primary ">
                   {item.title}
                 </p>
                 <p className="text-base text-primary font-semibold">$ {item.price}</p>

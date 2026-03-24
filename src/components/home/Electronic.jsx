@@ -26,6 +26,7 @@ const Electronic = () => {
   slidesToScroll: 1,
   autoplay: true,
   speed: 2000,
+  arrows:false,
   autoplaySpeed: 3000,
   cssEase: "linear",
 

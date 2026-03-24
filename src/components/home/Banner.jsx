@@ -17,13 +17,11 @@ const Banner = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
 
-  appendDots: (dots) => (
-  <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-10">
-    <ul className="flex justify-center items-center m-0 p-0">
-      {dots}
-    </ul>
-  </div>
-),
+    appendDots: (dots) => (
+      <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-10">
+        <ul className="flex justify-center items-center m-0 p-0">{dots}</ul>
+      </div>
+    ),
 
     customPaging: () => (
       <div className="h-2  md:h-3 rounded-full bg-white/70 border border-gray-400 transition-all duration-300"></div>
@@ -76,11 +74,7 @@ const Banner = () => {
               />
             </div>
             <div>
-              <img
-                className="w-full"
-                src="/egg-banner.png"
-                alt="banner"
-              />
+              <img className="w-full" src="/egg-banner.png" alt="banner" />
             </div>
             <div>
               <img
@@ -92,8 +86,6 @@ const Banner = () => {
           </Slider>
         </div>
       </div>
-
-      
     </section>
   );
 };

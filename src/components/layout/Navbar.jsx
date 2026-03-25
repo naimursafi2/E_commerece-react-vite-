@@ -6,6 +6,7 @@ import { GoSearch } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
 import { useGetCategoryListQuery } from "../../services/Api";
 import { FiSun } from "react-icons/fi";
+import { toast, ToastContainer } from "react-toastify";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,17 +74,21 @@ const Navbar = () => {
   };
   //search bar product
   const handleSearch = () => {
-    const trimmedText = searchText.trim();
+  const trimmedText = searchText.trim();
 
-    if (!trimmedText) return;
+  if (!trimmedText) {
+    toast.error("Please enter something to search");
+    return;
+  }
 
-    navigate(`/shop?search=${encodeURIComponent(trimmedText)}`);
-    setSearchText("");
-  };
+  navigate(`/shop?category=${encodeURIComponent(trimmedText)}`);
+  setSearchText("");
+};
   return (
     <header>
       {/* ================= TOP HEADER (Desktop only) ================= */}
       <div className="hidden bg-secondary py-3 md:block">
+        <ToastContainer/>
         <div className="container flex items-center justify-between text-base text-primary">
           <h3>Welcome to worldwide Megamart!</h3>
 

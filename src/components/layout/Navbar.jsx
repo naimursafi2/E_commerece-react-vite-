@@ -3,26 +3,28 @@ import { CiDiscount1 } from "react-icons/ci";
 import { FaBars, FaCarSide, FaMoon, FaRegUser } from "react-icons/fa";
 import { FaCartShopping, FaLocationDot } from "react-icons/fa6";
 import { GoSearch } from "react-icons/go";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useGetCategoryListQuery } from "../../services/Api";
-import { FiMoon, FiSun } from "react-icons/fi";
+import { FiSun } from "react-icons/fi";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
-  // sidebar এর বাইরে click detect করার জন্য ref
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
+
   const navRef = useRef(null);
   const { data } = useGetCategoryListQuery();
-  
-  // cookie থেকে value বের করার function
+
+  // cookie thake value ber korar function
   const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
     const cookie = cookies.find((row) => row.startsWith(name + "="));
     return cookie ? cookie.split("=")[1] : null;
   };
 
-  // component load হলে cookie থেকে user info বের করে
+  // component load hole cookie thake user info niya ashe
   useEffect(() => {
     const token = getCookie("accessToken");
     const user = getCookie("user");
@@ -34,7 +36,6 @@ const Navbar = () => {
     }
   }, []);
 
-  // mobile sidebar এর বাইরে click করলে sidebar close হবে
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -48,28 +49,37 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-//dark and light mode
-useEffect(() => {
-  const theme = localStorage.getItem("theme");
+  //dark and light mode
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
 
-  if (theme === "dark") {
-    document.documentElement.classList.add("dark");
-    setDarkMode(true);
-  }
-}, []);
-const [darkMode, setDarkMode] = useState(false);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      setDarkMode(true);
+    }
+  }, []);
+  const [darkMode, setDarkMode] = useState(false);
 
-const toggleTheme = () => {
-  if (darkMode) {
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("theme", "light");
-  } else {
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("theme", "dark");
-  }
+  const toggleTheme = () => {
+    if (darkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
 
-  setDarkMode(!darkMode);
-}
+    setDarkMode(!darkMode);
+  };
+  //search bar product
+  const handleSearch = () => {
+    const trimmedText = searchText.trim();
+
+    if (!trimmedText) return;
+
+    navigate(`/shop?search=${encodeURIComponent(trimmedText)}`);
+    setSearchText("");
+  };
   return (
     <header>
       {/* ================= TOP HEADER (Desktop only) ================= */}
@@ -119,12 +129,22 @@ const toggleTheme = () => {
             </Link>
 
             {/* desktop search bar */}
-            <div className="hidden w-[420px]  max-w-lg items-center gap-2.5 rounded-xl bg-[#F3F9FB] p-4 md:flex">
-              <GoSearch className="text-2xl text-brand" />
+            <div className="hidden w-[420px] max-w-lg items-center gap-2.5 rounded-xl bg-[#F3F9FB] dark:bg-slate-800 p-4 md:flex">
+              <GoSearch
+                className="cursor-pointer text-2xl text-brand"
+                onClick={handleSearch}
+              />
               <input
                 type="text"
-                placeholder="Search essentials, groceries and more..."
-                className="w-full text-base text-primary outline-0"
+                placeholder="Search essentials, groceries and more."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch();
+                  }
+                }}
+                className="w-full bg-transparent text-base text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 outline-0"
               />
             </div>
 
@@ -150,13 +170,16 @@ const toggleTheme = () => {
                 )}
               </Link>
 
-              <button onClick={toggleTheme} className="flex items-center cursor-pointer">
-  {darkMode ? (
-    <FiSun className="text-yellow-400 text-xl" />
-  ) : (
-    <FiMoon className="text-black text-xl" />
-  )}
-</button>
+              <button
+                onClick={toggleTheme}
+                className="flex items-center cursor-pointer"
+              >
+                {darkMode ? (
+                  <FiSun className="text-yellow-400 text-xl" />
+                ) : (
+                  <FaMoon className="text-black text-xl" />
+                )}
+              </button>
 
               <Link
                 to="/cart"
@@ -169,12 +192,22 @@ const toggleTheme = () => {
           </div>
 
           {/* mobile search bar */}
-          <div className="mt-6 flex w-full items-center gap-2.5 rounded-xl bg-[#F3F9FB] p-3 md:hidden">
-            <GoSearch className="text-2xl text-brand" />
+          <div className="mt-6 flex w-full items-center gap-2.5 rounded-xl bg-[#F3F9FB] dark:bg-slate-800 p-3 md:hidden">
+            <GoSearch
+              className="cursor-pointer text-2xl text-brand"
+              onClick={handleSearch}
+            />
             <input
               type="text"
-              placeholder="Search essentials..."
-              className="w-full text-base text-primary outline-0"
+              placeholder="Search essentials."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+              className="w-full bg-transparent text-base text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 outline-0"
             />
           </div>
         </div>
@@ -204,13 +237,13 @@ const toggleTheme = () => {
         {/* ================= MOBILE SIDEBAR CONTENT ================= */}
         <div
           ref={navRef}
-          className={`h-full w-4/5 bg-white p-5 transition-all ${
+          className={`h-full w-4/5 bg-white dark:bg-slate-900 p-5 transition-all ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <button
             onClick={() => setIsOpen(false)}
-            className="mb-6 text-xl font-bold"
+            className="mb-6 text-xl font-bold text-black dark:text-white"
           >
             Close
           </button>
@@ -221,6 +254,7 @@ const toggleTheme = () => {
                 <Link
                   to={`/shop?category=${item}`}
                   onClick={() => setIsOpen(false)}
+                  className="text-black dark:text-white"
                 >
                   {item}
                 </Link>
@@ -241,12 +275,14 @@ const toggleTheme = () => {
                     className="h-8 w-8 rounded-full object-cover"
                     alt="profile"
                   />
-                  <span>Profile</span>
+                  <span className="text-black dark:text-white">Profile</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <FaRegUser className="text-brand text-xl" />
-                  <span>Sign Up / Sign In</span>
+                  <span className="text-black dark:text-white">
+                    Sign Up / Sign In
+                  </span>
                 </div>
               )}
             </Link>

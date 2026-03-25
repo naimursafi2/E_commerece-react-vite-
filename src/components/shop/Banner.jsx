@@ -15,15 +15,12 @@ const Banner = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     appendDots: (dots) => (
-      <div>
-        <ul className=" flex items-center bottom-10 md:bottom-15 left-10 md:left-24  gap-2 absolute">
-          {" "}
-          {dots}{" "}
-        </ul>
+     <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-10">
+        <ul className="flex justify-center items-center m-0 p-0">{dots}</ul>
       </div>
     ),
-    customPaging: (i) => (
-      <div className="hidden md:flex w-3 md:w-4 h-3 md:h-4 bg-theme rounded-full"></div>
+      customPaging: () => (
+      <div className="h-2  md:h-3 rounded-full bg-white/70 border border-gray-400 transition-all duration-300"></div>
     ),
     responsive: [
       {
@@ -40,7 +37,7 @@ const Banner = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          dots: false, // small device e dots hidden
+          dots: true, // small device e dots hidden
           arrows: false,
           autoplay: true, // auto slide cholbe
           speed: 3000,
@@ -63,13 +60,13 @@ const Banner = () => {
               />
             </div>
             <div>
-              <img className="w-full rounded-2xl h-" src="/mans-shirt-banner.png" alt="banner" />
+              <img className="w-full  h-full" src="/mans-shirt-banner.png" alt="banner" />
             </div>
             <div>
-              <img className="w-full rounded-2xl h-" src="/kitchen-banner.png" alt="banner" />
+              <img className="w-full  h-full" src="/kitchen-banner.png" alt="banner" />
             </div>
             <div>
-              <img className="w-full rounded-2xl h-" src="/mans-shirt-banner.png" alt="banner" />
+              <img className="w-full  h-full" src="/mans-shirt-banner.png" alt="banner" />
             </div>
             
             
